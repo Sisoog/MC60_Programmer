@@ -1,0 +1,25 @@
+enable packages :
+
+-BR2_PACKAGE_PYTHON_SERIAL
+-BR2_PACKAGE_PYTHON3
+
+files:
+/root/display
+/root/mc60_firmware/mt6261_da.bin
+/root/MC60_AVLHDR.bin
+/root/mtkflasher.py
+/root/MC60_AVLHDR.bin
+/etc/init.d/S31Programmer
+
+add run permission to files:
+/root/mtkflasher.py
+/root/display
+/etc/init.d/S31Programmer
+
+edit file "/etc/init.d/S98uMTPrd" :
+    echo "Sisoog" > strings/0x409/manufacturer
+    echo "programmer" > strings/0x409/product 
+
+edit file "/etc/umtprd/umtprd.conf" :
+    storage "/root/mc60_firmware"                     "firmware" "rw"
+

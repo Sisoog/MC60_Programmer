@@ -1,0 +1,54 @@
+#!/bin/sh
+#
+# Start Programmer....
+#
+
+export START_BTN=137
+export OUT_BUZZER=139
+export OUT_RELAY=138
+
+
+start() {
+    printf "Starting PROGRAMMER: "
+
+    insmod /root/st7920fb.ko
+    
+    echo $START_BTN > /sys/class/gpio/export
+    echo $OUT_RELAY > /sys/class/gpio/export
+    echo $OUT_BUZZER > /sys/class/gpio/export
+    echo in > /sys/class/gpio/gpio${START_BTN}/direction
+    echo 0 > /sys/class/gpio/gpio${START_BTN}/active_low
+    echo out > /sys/class/gpio/gpio${OUT_RELAY}/direction
+    echo out > /sys/class/gpio/gpio${OUT_BUZZER}/direction
+
+    start-stop-daemon -S -m -b -p /var/run/flasher.pid -x /root/mtkflasher.py /root/mc60_firmware/MC60_AVLHDR.bin
+	[ $? = 0 ] && echo "OK" || echo "FAIL"
+
+}
+
+stop() {
+    #cat /dev/urandom > /dev/fb1
+    printf "Stopping PROGRAMMER: "
+    start-stop-daemon -K -q -p /var/run/flasher.pid
+    /root/display clear
+    [ $? = 0 ] && echo "OK" || echo "FAIL"
+}
+
+case "$1" in
+    start)
+    start
+    ;;
+    stop)
+    stop
+    ;;
+    restart|reload)
+    stop
+    sleep 1
+    start
+    ;;
+  *)
+    echo "Usage: $0 {start|stop|restart}"
+    exit 1
+esac
+
+exit $?
