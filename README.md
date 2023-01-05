@@ -18,9 +18,9 @@ this programmer running on f1c100s chip on licheepizero board with linux os
 
 [user manual](https://sisoog.com/wp-content/uploads/2022/08/sisoog_mc60_programmer_help.pdf)
 
-[build linux image](https://sisoog.com/)
+[build linux image](https://sisoog.com/2023/01/05/opencpu-programmer-f1c100s/)
 
-[compiled linux image](https://sisoog.com/)
+[compiled linux image](https://dl.sisoog.com/download/mc60_programmer.zip)
 
 
 ![MC60 OpenCpu Programmer](https://sisoog.com/wp-content/uploads/2022/08/mc60_programmer_banner.jpg)
